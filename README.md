@@ -67,16 +67,17 @@
 	
 
 ### 액터, 커맨드 부착하여 읽기 좋게
-![image](https://user-images.githubusercontent.com/73699193/97982030-82f2dc00-1e16-11eb-821d-27351387f8ad.png)
+![커멘드부착](https://user-images.githubusercontent.com/78134019/109456931-2f7b5c80-7a9d-11eb-94fd-9552795783b1.jpg)
 
 ### 어그리게잇으로 묶기
-![image](https://user-images.githubusercontent.com/73699193/97982108-a158d780-1e16-11eb-9270-6e9646268fd1.png)
+![어그리게잇](https://user-images.githubusercontent.com/78134019/109456954-399d5b00-7a9d-11eb-8815-f5d2c0dc06f5.jpg)
 
-    - 주문, 대리점관리, 결제 어그리게잇을 생성하고 그와 연결된 command 와 event 들에 의하여 트랜잭션이 유지되어야 하는 단위로 그들 끼리 묶어줌
+    - 호출, 택시관리, 택시 할당 어그리게잇을 생성하고 그와 연결된 command 와 event 들에 의하여 트랜잭션이 유지되어야 하는 단위로 그들 끼리 묶어줌 
+
 
 ### 바운디드 컨텍스트로 묶기
 
-![image](https://user-images.githubusercontent.com/73699193/97982213-c77e7780-1e16-11eb-87ef-03dbe66a6cf2.png)
+![바운디드](https://user-images.githubusercontent.com/78134019/109457090-8123e700-7a9d-11eb-82c1-8567db428b25.jpg)
 
     - 도메인 서열 분리 
         - Core Domain:  app(front), store : 없어서는 안될 핵심 서비스이며, 연견 Up-time SLA 수준을 99.999% 목표, 배포주기는 app 의 경우 1주일 1회 미만, store 의 경우 1개월 1회 미만
@@ -85,65 +86,69 @@
 
 ### 폴리시 부착 (괄호는 수행주체, 폴리시 부착을 둘째단계에서 해놔도 상관 없음. 전체 연계가 초기에 드러남)
 
-![image](https://user-images.githubusercontent.com/73699193/97982278-e3821900-1e16-11eb-97f4-fa2f59fc7ae0.png)
+![폴리시부착](https://user-images.githubusercontent.com/78134019/109457118-8e40d600-7a9d-11eb-9562-f03a83b336d4.jpg)
 
 ### 폴리시의 이동
 
-![image](https://user-images.githubusercontent.com/73699193/97982413-19bf9880-1e17-11eb-9720-cd82cf1060ff.png)
+![폴리시이동](https://user-images.githubusercontent.com/78134019/109457134-96991100-7a9d-11eb-9ca7-6f22063795c2.jpg)
 
 ### 컨텍스트 매핑 (점선은 Pub/Sub, 실선은 Req/Resp)
 
-![image](https://user-images.githubusercontent.com/73699193/97982527-45428300-1e17-11eb-8641-b658bab34fc6.png)
+![컨택스트매핑](https://user-images.githubusercontent.com/78134019/109457150-9f89e280-7a9d-11eb-9564-5e91755cfca5.jpg)
 
-    - 컨텍스트 매핑하여 묶어줌.
-    - 팀원 중 외국인이 투입되어 유비쿼터스 랭귀지인 영어로 변경	
+
 
 ### 완성된 모형
 
-![image](https://user-images.githubusercontent.com/73699193/97982584-60ad8e00-1e17-11eb-8fb6-af87b7c6ff91.png)
+![완성된모형2](https://user-images.githubusercontent.com/78134019/109457187-b16b8580-7a9d-11eb-835d-5c0c61c6dae9.jpg)
 
-    - View Model 추가
+
 
 ### 기능적 요구사항 검증
 
-![image](https://user-images.githubusercontent.com/73699193/97982759-96527700-1e17-11eb-9144-f95de1e0d01e.png)
+![기능적요구사항검증](https://user-images.githubusercontent.com/78134019/109457210-c1836500-7a9d-11eb-8b74-f8971cc6e1b0.jpg)
 
-   	- 고객이 APP에서 폰을 주문한다. (ok)
-   	- 고객이 결제한다. (ok)
-	- 결제가 되면 주문 내역이 대리점에 전달된다. (ok)
-	- 대리점에 주문 정보가 도착하면 배송한다. (ok)
-	- 배송이 되면 APP에서 배송상태를 조회할 수 있다. (ok)
+- 고객이 택시를 호출요청한다.(ok)
+- 택시 관리 시스템이 택시 할당을 요청한다.(ok)
+- 택시 자동 할당이 완료된다.(ok)
+- 호출상태 및 할당상태를 갱신한다.(ok)
+- 고객에게 카톡 알림을 한다.(ok)
 
-![image](https://user-images.githubusercontent.com/73699193/97982841-b2eeaf00-1e17-11eb-9f09-9b74f85a96ca.png)
 
-	- 고객이 주문을 취소할 수 있다. (ok)
-	- 주문이 취소되면 결제가 취소된다. (ok)
-	- 고객이 결제상태를 APP에서  조회 할 수 있다. (ok)
+![기능적요구사항검증_취소](https://user-images.githubusercontent.com/78134019/109457259-d9f37f80-7a9d-11eb-9ef5-d18faeb8cdaf.jpg)
 
-![image](https://user-images.githubusercontent.com/73699193/97982928-d3b70480-1e17-11eb-957e-6a9093d2a0d7.png)
+- 고객이 택시를 호출취소요청한다.(ok)
+- 택시 관리 시스템이 택시 할당 취소를 요청한다.(ok)
+- 택시 할당이 취소된다.(ok)
+- 취소상태로 갱신한다.(ok)
+- 고객에게 카톡 알림을 한다.(ok)
+
+
+![기능적요구사항_VIEW](https://user-images.githubusercontent.com/78134019/109457311-f5f72100-7a9d-11eb-8190-8e571eb95d7b.jpg)
+
   
-	- 고객이 모든 진행내역을 볼 수 있어야 한다. (ok)
+	- 고객이 호출진행내역을 볼 수 있어야 한다. (ok)
 
 
 ### 비기능 요구사항 검증
 
-![image](https://user-images.githubusercontent.com/73699193/97983019-f6e1b400-1e17-11eb-86ef-d43873ccbb7d.png)
+![비기능적요구사항](https://user-images.githubusercontent.com/78134019/109457342-0b6c4b00-7a9e-11eb-8ab9-8b26e93d4cf0.jpg)
 
-    - 1) 결제가 되지 않은 주문건은 아예 거래가 성립되지 않아야 한다. (Req/Res)
-    - 2) 대리점관리 기능이 수행되지 않더라도 주문은 365일 24시간 받을 수 있어야 한다. (Pub/sub)
-    - 3) 결제시스템이 과중되면 사용자를 잠시동안 받지 않고 결제를 잠시후에 하도록 유도한다. (Circuit breaker)
-    - 4) 주문이 취소되면 결제가 취소되고 주문정보에 업데이트가 되어야 한다.  (SAGA, 보상트렌젝션)
-    - 5) 고객이 모든 진행내역을 조회 할 수 있도록 성능을 고려하여 별도의 view로 구성한다. (CQRS, DML/SELECT 분리)
+1) 마이크로 서비스를 넘나드는 시나리오에 대한 트랜잭션 처리 
+   택시 할당요청이 완료되지 않은 호출요청 완료처리는 최종 할당이 되지 않는 경우 무한정 대기 등 대고객 서비스 및 신뢰도에 치명적 문제점이 있어 ACID 트랜잭션 적용. 
+   호출요청 시 택시 할당요청에 대해서는 Request-Response 방식 처리 
+2) 호출요청 완료시 할당확인 및 결과 전송: Taxi manage service 에서taxi Assign 마이크로서비스로 택시할당 요청이 전달되는 과정에 있어서 
+  taxi Assig 마이크로 서비스가 별도의 배포주기를 가지기 때문에 Eventual Consistency 방식으로 트랜잭션 처리함. 
+3) 나머지 모든 inter-microservice 트랜잭션: 호출상태, 할당/할당취소 여부 등 이벤트에 대해 카톡을 처리하는 등 데이터 일관성의 시점이 크리티컬하지 않은 모든 경우가 대부분이라 판단, 
+Eventual Consistency 를 기본으로 채택함. 
+
 
 
 ## 헥사고날 아키텍처 다이어그램 도출 (Polyglot)
 
-![image](https://user-images.githubusercontent.com/73699193/98181638-162b2f00-1f47-11eb-81af-0b71ff811e1c.png)
+![핵사고날](https://user-images.githubusercontent.com/78134019/109457469-42426100-7a9e-11eb-80f6-9e0fd4e5fcf2.jpg)
 
-    - Chris Richardson, MSA Patterns 참고하여 Inbound adaptor와 Outbound adaptor를 구분함
-    - 호출관계에서 PubSub 과 Req/Resp 를 구분함
-    - 서브 도메인과 바운디드 컨텍스트의 분리:  각 팀의 KPI 별로 아래와 같이 관심 구현 스토리를 나눠가짐
-    - 대리점의 경우 Polyglot 검증을 위해 Hsql로 셜계
+=======================여기까지===============================
 
 
 # 구현:
