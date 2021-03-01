@@ -295,20 +295,19 @@ http localhost:8081/택시호출s 휴대폰번호="01012345678" 호출상태="�
 
 
 
-## 비동기식 호출 / 시간적 디커플링 / 장애격리 
+## 비동기식 호출 / 장애격리  / 성능
 
-
-결제(pay)가 이루어진 후에 대리점(store)으로 이를 알려주는 행위는 비 동기식으로 처리하여 대리점(store)의 처리를 위하여 결제주문이 블로킹 되지 않아도록 처리한다.
+택시 관리 (Taxi manage) 이후 택시 할당(Taxi Assign) 은 비동기식 처리이므로 , 택시 호출(Taxi call) 의 서비스 호출에는 영향이 없다
  
-- 결제승인이 되었다(payCompleted)는 도메인 이벤트를 카프카로 송출한다(Publish)
- 
-![image](https://user-images.githubusercontent.com/73699193/98075277-6f478400-1eaf-11eb-88c8-2b4a7736e56b.png)
+고객이 택시 호출(Taxi call) 후 상태가 [호출]->[호출중] 로 변경되고 할당이 완료되면 [호출확정] 로 변경이 되지만 , 택시 할당(Taxi Assign)이 정상적이지 않으므로 [호출중]로 남아있음. 
+<고객 택시 호출 Taxi call>
+![비동기_호출1](https://user-images.githubusercontent.com/78134019/109468085-740ff380-7aaf-11eb-8caa-8f64e09accef.png)
+
+<택시 할당이 정상적이지 않아 호출중으로 남아있음>
+![택시호출_택시할당없이](https://user-images.githubusercontent.com/78134019/109468161-930e8580-7aaf-11eb-8144-8c2376da8ed9.png)
 
 
-- 대리점(store)에서는 결제승인(payCompleted) 이벤트에 대해서 이를 수신하여 자신의 정책을 처리하도록 PolicyHandler 를 구현한다.
-- 주문접수(OrderReceive)는 송출된 결제승인(payCompleted) 정보를 store의 Repository에 저장한다.:
- 
-![image](https://user-images.githubusercontent.com/73699193/98076059-e0d40200-1eb0-11eb-94ad-c4ea114cb3aa.png)
+
 
 
 대리점(store)시스템은 주문(app)/결제(pay)와 완전히 분리되어있으며(sync transaction 없음), 이벤트 수신에 따라 처리되기 때문에, 대리점(store)이 유지보수로 인해 잠시 내려간 상태라도 주문을 받는데 문제가 없다.(시간적 디커플링):
