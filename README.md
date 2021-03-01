@@ -211,17 +211,18 @@ pause ..
 
 gateway > applitcation.yml 설정
 
-![gateway_8080](https://user-images.githubusercontent.com/78134019/109464270-c4845280-7aa9-11eb-8af5-7e1a4c882a2e.jpg)
+![gateway_1](https://user-images.githubusercontent.com/78134019/109480363-c73d7280-7abe-11eb-9904-0c18e79072eb.png)
 
-![yaml](https://user-images.githubusercontent.com/78134019/109461023-ec24ec00-7aa4-11eb-8be2-22db7ec1a66e.jpg)
+![gateway_2](https://user-images.githubusercontent.com/78134019/109480386-d02e4400-7abe-11eb-9251-a813ac911e0d.png)
 
 
 gateway 테스트
 
 ```
 http localhost:8080/택시호출s
+-> gateway 를 호출하나 8081 로 호출됨
 ```
-![gateway_test](https://user-images.githubusercontent.com/78134019/109462623-22fc0180-7aa7-11eb-8401-c561db72f4c9.jpg)
+![gateway_3](https://user-images.githubusercontent.com/78134019/109480424-da504280-7abe-11eb-988e-2a6d7a1f7cea.png)
 
 
 
@@ -311,6 +312,9 @@ http localhost:8081/택시호출s 휴대폰번호="01012345678" 호출상태="�
 
 ![택시관리재시작](https://user-images.githubusercontent.com/78134019/109464984-e5997300-7aaa-11eb-9363-b7bfe15de105.jpg)
 
+-fallback 
+
+![fallback캡쳐](https://user-images.githubusercontent.com/78134019/109480299-b5f46600-7abe-11eb-906e-9e1e6da245b2.png)
 
 
 ## 비동기식 호출 / 장애격리  / 성능
