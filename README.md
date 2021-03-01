@@ -207,24 +207,31 @@ http localhost:8080/택시호출s
 
 ## 동기식 호출 과 Fallback 처리
 
-분석단계에서의 조건 중 하나로 주문(app)->결제(pay) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리하기로 하였다. 
+호출(taxicall)->택시관리(taximanage) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리함.
 호출 프로토콜은 이미 앞서 Rest Repository 에 의해 노출되어있는 REST 서비스를 FeignClient 를 이용하여 호출하도록 한다. 
 
 - 결제서비스를 호출하기 위하여 FeignClient 를 이용하여 Service 대행 인터페이스 (Proxy) 를 구현 
 ```
-# (app) external > PaymentService.java
+# external > 택시관리Service.java
 
-package phoneseller.external;
 
-@FeignClient(name="pay", url="${api.pay.url}")
-public interface PaymentService {
+package taxiguider.external;
 
-    @RequestMapping(method= RequestMethod.POST, path="/payments")
-    public void pay(@RequestBody Payment payment);
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@FeignClient(name="taximanage", url="http://localhost:8082")
+public interface 택시관리Service {
+
+    @RequestMapping(method= RequestMethod.POST, path="/택시관리s")
+    public void 택시할당요청(@RequestBody 택시관리 택시관리);
 
 }
+
 ```
-![image](https://user-images.githubusercontent.com/73699193/98065833-b1190000-1e98-11eb-9e44-84d4961011ed.png)
+![동기식](https://user-images.githubusercontent.com/78134019/109463569-97837000-7aa8-11eb-83c4-6f6eff1594aa.jpg)
 
 
 - 주문을 받은 직후 결제를 요청하도록 처리
