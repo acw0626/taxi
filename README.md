@@ -146,7 +146,7 @@ Eventual Consistency 를 기본으로 채택함.
 
 ## 헥사고날 아키텍처 다이어그램 도출 (Polyglot)
 
-![핵사고날](https://user-images.githubusercontent.com/78134019/109457469-42426100-7a9e-11eb-80f6-9e0fd4e5fcf2.jpg)
+![핵사고날수정됨](https://user-images.githubusercontent.com/78134019/109488099-7468b880-7ac8-11eb-93ec-b68003e5ccf4.jpg)
 
 
 
