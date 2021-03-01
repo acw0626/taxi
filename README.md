@@ -199,9 +199,9 @@ gateway > applitcation.yml 설정
 gateway 테스트
 
 ```
-http POST http://gateway:8080/orders item=test qty=1
+http localhost:8080/택시호출s
 ```
-![image](https://user-images.githubusercontent.com/73699193/98183284-2d6c1b80-1f4b-11eb-90ad-c95c4df1f36a.png)
+![gateway_test](https://user-images.githubusercontent.com/78134019/109462623-22fc0180-7aa7-11eb-8401-c561db72f4c9.jpg)
 
 
 
