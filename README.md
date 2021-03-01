@@ -273,26 +273,25 @@ public interface 택시관리Service {
 
 ![동기식2](https://user-images.githubusercontent.com/78134019/109463985-47f17400-7aa9-11eb-8603-c1f83e17951d.jpg)
 
+- 동기식 호출 적용으로 택시 관리 시스템이 정상적이지 않으면 , 택시콜도 접수될 수 없음을 확인 
+```
+# 택시 관리 시스템 down 후 taxicall 호출 
 
-- 동기식 호출이 적용되서 결제 시스템이 장애가 나면 주문도 못받는다는 것을 확인:
+#taxicall
+
+C:\Users\Administrator>http localhost:8081/택시호출s 휴대폰번호="01012345678" 호출상태="호출"
+```
+
+![택시관리죽으면택시콜놉](https://user-images.githubusercontent.com/78134019/109464780-905d6180-7aaa-11eb-9c90-e7d1326deea1.jpg)
 
 ```
-#결제(pay) 서비스를 잠시 내려놓음 (ctrl+c)
+# 택시 관리 (taximanage) 재기동 후 주문하기
 
 #주문하기(order)
-http http://localhost:8081/orders item=note20 qty=1   #Fail
+http localhost:8081/택시호출s 휴대폰번호="01012345678" 호출상태="호출"
 ```
-![image](https://user-images.githubusercontent.com/73699193/98072284-04934a00-1ea9-11eb-9fad-40d3996e109f.png)
 
-```
-#결제(pay) 서비스 재기동
-cd pay
-mvn spring-boot:run
-
-#주문하기(order)
-http http://localhost:8081/orders item=note21 qty=2   #Success
-```
-![image](https://user-images.githubusercontent.com/73699193/98074359-9f8e2300-1ead-11eb-8854-0449a65ff55c.png)
+![택시관리재시작](https://user-images.githubusercontent.com/78134019/109464984-e5997300-7aaa-11eb-9363-b7bfe15de105.jpg)
 
 
 
