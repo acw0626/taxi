@@ -234,22 +234,43 @@ public interface 택시관리Service {
 ![동기식](https://user-images.githubusercontent.com/78134019/109463569-97837000-7aa8-11eb-83c4-6f6eff1594aa.jpg)
 
 
-- 주문을 받은 직후 결제를 요청하도록 처리
+- 택시호출을 하면 택시관리가 호출되도록..
 ```
-# (app) Order.java (Entity)
+# 택시호출.java
 
-    @PostPersist
+ @PostPersist
     public void onPostPersist(){
-
-       phoneseller.external.Payment payment = new phoneseller.external.Payment();
-        payment.setOrderId(this.getId());
-        payment.setProcess("Ordered");
-        
-        AppApplication.applicationContext.getBean(phoneseller.external.PaymentService.class)
-            .pay(payment);
-    }
+//        택시호출요청됨 택시호출요청됨 = new 택시호출요청됨();
+//        BeanUtils.copyProperties(this, 택시호출요청됨);
+//        택시호출요청됨.publishAfterCommit();
+    	
+    	System.out.println("휴대폰번호 " + get휴대폰번호());
+        System.out.println("호출위치 " + get호출위치());
+        System.out.println("호출상태 " + get호출상태());
+        System.out.println("예상요금 " + get예상요금());
+        //Following code causes dependency to external APIs
+        // it is NOT A GOOD PRACTICE. instead, Event-Policy mapping is recommended.   	
+    	if(get휴대폰번호() != null)
+		{
+    		System.out.println("SEND###############################" + getId());
+			택시관리 택시관리 = new 택시관리();
+	        
+			택시관리.setOrderId(String.valueOf(getId()));
+	        택시관리.set고객휴대폰번호(get휴대폰번호());
+	        if(get호출위치()!=null) 
+	        	택시관리.set호출위치(get호출위치());
+	        if(get호출상태()!=null) 
+	        	택시관리.set호출상태(get호출상태());
+	        if(get예상요금()!=null) 
+	        	택시관리.set예상요금(get예상요금());
+	        
+	        // mappings goes here
+	        TaxicallApplication.applicationContext.getBean(택시관리Service.class).택시할당요청(택시관리);
+		}
 ```
-![image](https://user-images.githubusercontent.com/73699193/98066539-a6f80100-1e9a-11eb-8dd8-bf213d90e5fb.png)
+
+![동기식2](https://user-images.githubusercontent.com/78134019/109463985-47f17400-7aa9-11eb-8603-c1f83e17951d.jpg)
+
 
 - 동기식 호출이 적용되서 결제 시스템이 장애가 나면 주문도 못받는다는 것을 확인:
 
