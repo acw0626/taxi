@@ -204,11 +204,14 @@ pause ..
 
 ## 폴리글랏 퍼시스턴스
 
-<DB>
+
 
 ![폴리그랏](https://user-images.githubusercontent.com/78134019/109483794-02da3b80-7ac3-11eb-8714-40f1f41164bb.jpg)
 
-<소스>
+
+## 폴리글랏 프로그래밍
+
+![폴리그랏프로그래밍](https://user-images.githubusercontent.com/78134019/109489189-dbd33800-7ac9-11eb-86f5-bbdb072454ce.jpg)
 
 
 ## Gateway 적용
