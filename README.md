@@ -148,7 +148,7 @@ Eventual Consistency 를 기본으로 채택함.
 
 ![핵사고날](https://user-images.githubusercontent.com/78134019/109457469-42426100-7a9e-11eb-80f6-9e0fd4e5fcf2.jpg)
 
-=======================여기까지===============================
+
 
 
 # 구현:
@@ -156,25 +156,43 @@ Eventual Consistency 를 기본으로 채택함.
 서비스를 로컬에서 실행하는 방법은 아래와 같다 (각자의 포트넘버는 8081 ~ 808n 이다)
 
 ```
-cd app
-mvn spring-boot:run
+- run_taxicall.bat
+call setenv.bat
+REM java  -Xmx400M -Djava.security.egd=file:/dev/./urandom -jar food-delivery\app\target\app-0.0.1-SNAPSHOT.jar --spring.profiles.active=docker
+REM java  -Xmx400M -Djava.security.egd=file:/dev/./urandom -jar food-delivery\app\target\app-0.0.1-SNAPSHOT.jar --spring.profiles.active=default
+cd ..\taxiguider\taxicall
+mvn clean spring-boot:run
+pause ..
 
-cd pay
-mvn spring-boot:run 
+- run_taximanage.bat
+call setenv.bat
+REM java  -Xmx400M -Djava.security.egd=file:/dev/./urandom -jar food-delivery\pay\target\pay-0.0.1-SNAPSHOT.jar --spring.profiles.active=docker
+REM java  -Xmx400M -Djava.security.egd=file:/dev/./urandom -jar food-delivery\pay\target\pay-0.0.1-SNAPSHOT.jar --spring.profiles.active=default
+cd ..\taxiguider\taximanage
+mvn clean spring-boot:run
+pause ..
 
-cd store
-mvn spring-boot:run  
+- run_taxiassign.bat
+call setenv.bat
+REM java  -Xmx400M -Djava.security.egd=file:/dev/./urandom -jar food-delivery\store\target\store-0.0.1-SNAPSHOT.jar --spring.profiles.active=docker
+REM java  -Xmx400M -Djava.security.egd=file:/dev/./urandom -jar food-delivery\store\target\store-0.0.1-SNAPSHOT.jar --spring.profiles.active=default
+cd ..\taxiguider\taxiassign
+mvn clean spring-boot:run
+pause ..
 
-cd customer
-mvn spring-boot:run  
+- run_customer.bat
+call setenv.bat
+SET CONDA_PATH=%ANACONDA_HOME%;%ANACONDA_HOME%\BIN;%ANACONDA_HOME%\condabin;%ANACONDA_HOME%\Library\bin;%ANACONDA_HOME%\Scripts;
+SET PATH=%CONDA_PATH%;%PATH%;
+cd ..\taxiguider_py\customer\
+python policy-handler.py 
+pause ..
+
 ```
 
 ## DDD 의 적용
+총 3개의 Domain 으로 관리되고 있으며, 택시요청(Taxicall) , 택시관리(TaxiManage), 택시할당(TaxiAssign) 으로 구성된다. 
 
-각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다: (예시는 app 마이크로 서비스). 
-이때 가능한 현업에서 사용하는 언어 (유비쿼터스 랭귀지)를 그대로 사용하려고 노력했다. 
-하지만, 일부 구현에 있어서 영문이 아닌 경우는 실행이 불가능한 경우가 있기 때문에 계속 사용할 방법은 아닌것 같다. 
-(Maven pom.xml, Kafka의 topic id, FeignClient 의 서비스 id 등은 한글로 식별자를 사용하는 경우 오류가 발생하는 것을 확인하였다)
 
 ![DDD](https://user-images.githubusercontent.com/78134019/109460756-74ef5800-7aa4-11eb-8140-ec3ebb47a63f.jpg)
 
@@ -184,7 +202,6 @@ mvn spring-boot:run
 
 
 ## 폴리글랏 퍼시스턴스
-대리점의 경우 H2 DB인 주문과 결제와 달리 Hsql으로 구현하여 MSA간 서로 다른 종류의 DB간에도 문제 없이 동작하여 다형성을 만족하는지 확인하였다. 
 
 
 --- 추후 등록 예정
@@ -212,7 +229,7 @@ http localhost:8080/택시호출s
 호출(taxicall)->택시관리(taximanage) 간의 호출은 동기식 일관성을 유지하는 트랜잭션으로 처리함.
 호출 프로토콜은 이미 앞서 Rest Repository 에 의해 노출되어있는 REST 서비스를 FeignClient 를 이용하여 호출하도록 한다. 
 
-- 결제서비스를 호출하기 위하여 FeignClient 를 이용하여 Service 대행 인터페이스 (Proxy) 를 구현 
+
 ```
 # external > 택시관리Service.java
 
@@ -314,6 +331,8 @@ http localhost:8081/택시호출s 휴대폰번호="01012345678" 호출상태="�
 
 ![View조회](https://user-images.githubusercontent.com/78134019/109469973-1e891600-7ab2-11eb-8fc9-0539b74b5b8a.jpg)
 
+
+======================================================================================================================
 # 운영
 
 ## Deploy / Pipeline
