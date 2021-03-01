@@ -193,6 +193,8 @@ mvn spring-boot:run
 
 gateway > applitcation.yml 설정
 
+![gateway_8080](https://user-images.githubusercontent.com/78134019/109464270-c4845280-7aa9-11eb-8af5-7e1a4c882a2e.jpg)
+
 ![yaml](https://user-images.githubusercontent.com/78134019/109461023-ec24ec00-7aa4-11eb-8be2-22db7ec1a66e.jpg)
 
 
