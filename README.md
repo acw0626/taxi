@@ -205,7 +205,7 @@ pause ..
 ## 폴리글랏 퍼시스턴스
 
 
---- 추후 등록 예정
+![폴리그랏](https://user-images.githubusercontent.com/78134019/109481998-d02f4380-7ac0-11eb-9985-2d1eb4c59851.jpg)
 
 ## Gateway 적용
 
