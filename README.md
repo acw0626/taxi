@@ -351,7 +351,7 @@ http localhost:8081/택시호출s 휴대폰번호="01012345678" 호출상태="�
 
 - 네임스페이스 만들기
 ```
-kubectl create ns phone82
+kubectl create ns taxiguider
 kubectl get ns
 ```
 ![image](https://user-images.githubusercontent.com/73699193/97960790-6d20ef00-1df5-11eb-998d-d5591975b5d4.png)
@@ -411,7 +411,7 @@ readiness 설정 (무정지 배포)
 liveness 설정 (self-healing)
 resource 설정 (autoscaling)
 ```
-![image](https://user-images.githubusercontent.com/73699193/98092861-8182eb80-1eca-11eb-87c5-afa22140ebad.png)
+![deployment_yml](https://user-images.githubusercontent.com/78134019/109652001-9171ba00-7ba2-11eb-8c29-7128ceb4ec97.jpg)
 
 - deployment.yml로 서비스 배포
 ```
@@ -431,7 +431,15 @@ kubectl apply -f kubernetes/deployment.yml
 feign:
   hystrix:
     enabled: true
-    
+
+# To set thread isolation to SEMAPHORE
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          strategy: SEMAPHORE
+
 hystrix:
   command:
     # 전역설정
@@ -439,7 +447,7 @@ hystrix:
       execution.isolation.thread.timeoutInMilliseconds: 610
 
 ```
-![image](https://user-images.githubusercontent.com/73699193/98093705-a166df00-1ecb-11eb-83b5-f42e554f7ffd.png)
+![hystrix](https://user-images.githubusercontent.com/78134019/109652345-0218d680-7ba3-11eb-847b-708ba071c119.jpg)
 
 * siege 툴 사용법:
 ```
