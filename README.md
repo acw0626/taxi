@@ -349,39 +349,56 @@ http localhost:8081/택시호출s 휴대폰번호="01012345678" 호출상태="�
 
 ## Deploy / Pipeline
 
-- 네임스페이스 만들기
+- az login
 ```
-kubectl create ns taxiguider
-kubectl get ns
+{
+    "cloudName": "AzureCloud",
+    "homeTenantId": "6011e3f8-2818-42ea-9a63-66e6acc13e33",
+    "id": "718b6bd0-fb75-4ec9-9f6e-08ae501f92ca",
+    "isDefault": true,
+    "managedByTenants": [],
+    "name": "2",
+    "state": "Enabled",
+    "tenantId": "6011e3f8-2818-42ea-9a63-66e6acc13e33",
+    "user": {
+      "name": "skTeam03@gkn2021hotmail.onmicrosoft.com",
+      "type": "user"
+    }
+  }
 ```
-![image](https://user-images.githubusercontent.com/73699193/97960790-6d20ef00-1df5-11eb-998d-d5591975b5d4.png)
 
-- 폴더 만들기, 해당폴더로 이동
-```
-mkdir phone82
-cd phone 82
-```
-![image](https://user-images.githubusercontent.com/73699193/97961127-0ea84080-1df6-11eb-81b3-1d5e460d4c0f.png)
 
-- 소스 가져오기
+- account set 
 ```
-git clone https://github.com/phone82/app.git
+az account set --subscription "종량제2"
 ```
-![image](https://user-images.githubusercontent.com/73699193/98089346-eb4cc680-1ec5-11eb-9c23-f6987dee9308.png)
 
-- 빌드하기
-```
-cd app
-mvn package -Dmaven.test.skip=true
-```
-![image](https://user-images.githubusercontent.com/73699193/98089442-19320b00-1ec6-11eb-88b5-544cd123d62a.png)
 
-- 도커라이징: Azure 레지스트리에 도커 이미지 푸시하기
+- 리소스그룹생성
 ```
-az acr build --registry admin02 --image admin02.azurecr.io/app:latest .
+그룹명 : skccteam03-rsrcgrp
 ```
-![image](https://user-images.githubusercontent.com/73699193/98089685-6dd58600-1ec6-11eb-8fb9-80705c854c7b.png)
 
+
+- 클러스터 생성
+```
+클러스터 명 : skccteam03-aks
+```
+
+- 토큰 가져오기
+```
+az aks get-credentials --resource-group skccteam03-rsrcgrp --name skccteam03-aks
+```
+
+- aks에 acr 붙이기
+```
+az aks update -n skccteam03-aks -g skccteam03-rsrcgrp --attach-acr skccteam03
+```
+
+![aks붙이기](https://user-images.githubusercontent.com/78134019/109653395-540e2c00-7ba4-11eb-97dd-2dcfdf5dc539.jpg)
+
+
+---------------------아래 추가 필요----------------------------
 - 컨테이너라이징: 디플로이 생성 확인
 ```
 kubectl create deploy app --image=admin02.azurecr.io/app:latest -n phone82
