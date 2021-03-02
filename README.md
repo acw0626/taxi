@@ -398,28 +398,11 @@ az aks update -n skccteam03-aks -g skccteam03-rsrcgrp --attach-acr skccteam03
 ![aks붙이기](https://user-images.githubusercontent.com/78134019/109653395-540e2c00-7ba4-11eb-97dd-2dcfdf5dc539.jpg)
 
 
----------------------아래 추가 필요----------------------------
-- 컨테이너라이징: 디플로이 생성 확인
-```
-kubectl create deploy app --image=admin02.azurecr.io/app:latest -n phone82
-kubectl get all -n phone82
-```
-![image](https://user-images.githubusercontent.com/73699193/98090560-83977b00-1ec7-11eb-9770-9cfe1021f0b4.png)
-
-- 컨테이너라이징: 서비스 생성 확인
-```
-kubectl expose deploy app --type="ClusterIP" --port=8080 -n phone82
-kubectl get all -n phone82
-```
-![image](https://user-images.githubusercontent.com/73699193/98090693-b80b3700-1ec7-11eb-959e-fc0ce94663aa.png)
-
-- pay, store, customer, gateway에도 동일한 작업 반복
 
 
 
-
--(별첨)deployment.yml을 사용하여 배포 
-
+-deployment.yml을 사용하여 배포 
+--> 도커 이미지 만들기 붙이기 
 - deployment.yml 편집
 ```
 namespace, image 설정
