@@ -562,7 +562,7 @@ az acr build --registry [acr-registry-name] --image [acr-registry-name].azurecr.
 
 -deployment.yml을 사용하여 배포 
 
-```
+
 ![deployment_yml](https://user-images.githubusercontent.com/78134019/109652001-9171ba00-7ba2-11eb-8c29-7128ceb4ec97.jpg)
 
 - deployment.yml로 서비스 배포
@@ -633,14 +633,19 @@ hystrix:
 
 
 * Siege Run
+
 ```
 kubectl run siege --image=apexacme/siege-nginx -n team03
 ```
+
 * 실행
+
 ```
 kubectl exec -it pod/siege-5459b87f86-hlfm9 -c siege -n team03 -- /bin/bash
 ```
+
 *부하 실행
+
 ```
 siege -c200 -t60S -r10 -v --content-type "application/json" 'http://20.194.36.201:8080/taxicalls POST {"tel": "0101231234"}'
 ```
