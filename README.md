@@ -660,12 +660,12 @@ siege -c200 -t60S -r10 -v --content-type "application/json" 'http://20.194.36.20
 ![secs2](https://user-images.githubusercontent.com/78134019/109786922-07345f00-7c51-11eb-900a-315f7d0d6484.png)
 
 
-- CB 잘 적용됨을 확인
+
 
 
 ### 오토스케일 아웃
 
-- 대리점 시스템에 대한 replica 를 동적으로 늘려주도록 HPA 를 설정한다. 설정은 CPU 사용량이 15프로를 넘어서면 replica 를 10개까지 늘려준다:
+- 택시호출 시스템에 대한 replica 를 동적으로 늘려주도록 HPA 를 설정한다. 설정은 CPU 사용량이 15프로를 넘어서면 replica 를 10개까지 늘려준다:
 
 ```
 # autocale out 설정
