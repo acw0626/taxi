@@ -209,12 +209,72 @@ pause ..
 ![폴리그랏](https://user-images.githubusercontent.com/78134019/109483794-02da3b80-7ac3-11eb-8714-40f1f41164bb.jpg)
 
 
-## 폴리글랏 프로그래밍
+## 폴리글랏 프로그래밍 - 파이썬
 
 ![폴리그랏프로그래밍](https://user-images.githubusercontent.com/78134019/109489189-dbd33800-7ac9-11eb-86f5-bbdb072454ce.jpg)
 
+## 마이크로 서비스 호출 흐름
+
+- taxicall 서비스 호출처리
+호출(taxicall)->택시관리(taximanage) 간의 호출처리 됨.
+택시 할당에서 택시기사를 할당하여 호출 확정 상태가 됨.
+두 개의 호출 상태
+를 만듬.
+```
+http localhost:8081/택시호출s 휴대폰번호="01012345678" 호출상태=호출 호출위치="마포" 예상요금=25000
+http localhost:8081/택시호출s 휴대폰번호="01056789012" 호출상태=호출 호출위치="서대문구" 예상요금=30000
+```
+
+![image](screenshots/taxicall1.png "taxicall 서비스 호출")
+![image](screenshots/taxicall2.png "taxicall 서비스 호출")
+
+호출 결과는 모두 택시 할당(taxiassign)에서 택시기사의 할당으로 처리되어 호출 확정 상태가 되어 있음.
+
+![image](screenshots/taxicall_result1.png "taxicall 서비스 호출 결과")
+![image](screenshots/taxicall_result2.png "taxicall 서비스 호출 결과")
+![image](screenshots/taximanage_result1.png "taxicall 서비스 호출 결과 - 택시관리")
+
+
+- taxicall 서비스 호출 취소 처리
+
+호출 취소는 택시호출에서 다음과 같이 호출 하나를 취소 함으로써 진행 함.
+
+```
+http delete http://localhost:8081/택시호출s/1
+HTTP/1.1 204
+Date: Tue, 02 Mar 2021 16:59:12 GMT
+```
+호출이 취소 되면 택시 호출이 하나가 삭제 되었고, 
+
+```
+http localhost:8081/택시호출s/
+```
+![image](screenshots/taxicancel_result.png "taxicall 서비스 호출취소 결과")
+
+
+택시관리에서는 해당 호출에 대해서 호출취소로 상태가 변경 됨.
+
+```
+http localhost:8082/택시관리s/
+```
+![image](screenshots/taximanage_result.png "taxicall 서비스 호출취소 결과")
+
+- 고객 메시지 서비스 처리
+고객(customer)는 호출 확정과 할당 확정에 대한 메시지를 다음과 같이 받을 수 있으며,
+할당 된 택시기사의 정보를 또한 확인 할 수 있다.
+파이썬으로 구현 하였음.
+
+![image](screenshots/customer.png "호출 결과에 대한 고객 메시지")
+
 
 ## Gateway 적용
+
+서비스에 대한 하나의 접점을 만들기 위한 게이트웨이의 설정은 8088로 설정 하였으며, 다음 마이크로서비스에 대한 설정 입니다.
+```
+택시호출 서비스 : 8081
+택시관리 서비스 : 8082
+택시호출 서비스 : 8083
+```
 
 gateway > applitcation.yml 설정
 
@@ -250,7 +310,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@FeignClient(name="taximanage", url="http://localhost:8082")
+//@FeignClient(name="taximanage", url="http://localhost:8082")
+@FeignClient(name="taximanage", url="http://localhost:8082", fallback = 택시관리ServiceFallback.class)
 public interface 택시관리Service {
 
     @RequestMapping(method= RequestMethod.POST, path="/택시관리s")
@@ -259,6 +320,35 @@ public interface 택시관리Service {
 }
 
 ```
+
+```
+# external > 택시관리ServiceFallback.java
+
+
+package taxiguider.external;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class 택시관리ServiceFallback implements 택시관리Service {
+	 
+	//@Override
+	//public void 택시할당요청(택시관리 택시관리) 
+	//{	
+	//	System.out.println("Circuit breaker has been opened. Fallback returned instead.");
+	//}
+	
+	
+	@Override
+	public void 택시할당요청(택시관리 택시관리) {
+		// TODO Auto-generated method stub
+		System.out.println("Circuit breaker has been opened. Fallback returned instead. " + 택시관리.getId());
+	}
+
+}
+
+```
+
 ![동기식](https://user-images.githubusercontent.com/78134019/109463569-97837000-7aa8-11eb-83c4-6f6eff1594aa.jpg)
 
 
@@ -267,11 +357,7 @@ public interface 택시관리Service {
 # 택시호출.java
 
  @PostPersist
-    public void onPostPersist(){
-//        택시호출요청됨 택시호출요청됨 = new 택시호출요청됨();
-//        BeanUtils.copyProperties(this, 택시호출요청됨);
-//        택시호출요청됨.publishAfterCommit();
-    	
+    public void onPostPersist(){    	
     	System.out.println("휴대폰번호 " + get휴대폰번호());
         System.out.println("호출위치 " + get호출위치());
         System.out.println("호출상태 " + get호출상태());
@@ -344,7 +430,20 @@ http localhost:8081/택시호출s 휴대폰번호="01012345678" 호출상태="�
 ![고객View](https://user-images.githubusercontent.com/78134019/109483385-80ea1280-7ac2-11eb-9419-bf3ff5a0dbbc.png)
 
 
-======================================================================================================================
+---mvn MSA Service
+<gateway>
+![mvn_gateway](https://user-images.githubusercontent.com/78134019/109744124-244b3c80-7c15-11eb-80a9-bed42413aa58.png)
+	
+<taxicall>
+![mvn_taxicall](https://user-images.githubusercontent.com/78134019/109744165-31682b80-7c15-11eb-9d94-7bc23efca6b6.png)
+
+<taximanage>
+![mvn_taximanage](https://user-images.githubusercontent.com/78134019/109744195-3b8a2a00-7c15-11eb-9554-1c3ba088af52.png)
+
+<taxiassign>
+![mvn_taxiassign](https://user-images.githubusercontent.com/78134019/109744226-46dd5580-7c15-11eb-8b47-5100ed01e3ae.png)
+
+
 # 운영
 
 ## Deploy / Pipeline
@@ -399,8 +498,6 @@ az aks update -n skccteam03-aks -g skccteam03-rsrcgrp --attach-acr skccteam03
 
 
 
-
-
 -deployment.yml을 사용하여 배포 
 --> 도커 이미지 만들기 붙이기 
 - deployment.yml 편집
@@ -418,6 +515,20 @@ resource 설정 (autoscaling)
 cd app
 kubectl apply -f kubernetes/deployment.yml
 ```
+<Deploy cutomer>
+![deploy_customer](https://user-images.githubusercontent.com/78134019/109744443-a471a200-7c15-11eb-94c9-a0c0a7999d04.png)
+
+<Deploy gateway>
+![deploy_gateway](https://user-images.githubusercontent.com/78134019/109744457-acc9dd00-7c15-11eb-8502-ff65e779e9d2.png)
+
+<Deploy taxiassign>
+![deploy_taxiassign](https://user-images.githubusercontent.com/78134019/109744471-b3585480-7c15-11eb-8d68-bba9c3d8ce01.png)
+
+<Deploy taxicall>
+![deploy_taxicall](https://user-images.githubusercontent.com/78134019/109744487-bb17f900-7c15-11eb-8bd0-ff0a9fc9b2e3.png)
+
+<Deploy_taximanage>
+![deploy_taximanage](https://user-images.githubusercontent.com/78134019/109744591-e69ae380-7c15-11eb-834a-44befae55092.png)
 
 ## 동기식 호출 / 서킷 브레이킹 / 장애격리
 
@@ -449,6 +560,8 @@ hystrix:
 ```
 ![hystrix](https://user-images.githubusercontent.com/78134019/109652345-0218d680-7ba3-11eb-847b-708ba071c119.jpg)
 
+
+-----------------------------------------
 * siege 툴 사용법:
 ```
  siege가 생성되어 있지 않으면:
