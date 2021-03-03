@@ -438,15 +438,19 @@ http localhost:8081/택시호출s 휴대폰번호="01012345678" 호출상태="�
 
 ---mvn MSA Service
 <gateway>
+	
 ![mvn_gateway](https://user-images.githubusercontent.com/78134019/109744124-244b3c80-7c15-11eb-80a9-bed42413aa58.png)
 	
 <taxicall>
+	
 ![mvn_taxicall](https://user-images.githubusercontent.com/78134019/109744165-31682b80-7c15-11eb-9d94-7bc23efca6b6.png)
 
 <taximanage>
+	
 ![mvn_taximanage](https://user-images.githubusercontent.com/78134019/109744195-3b8a2a00-7c15-11eb-9554-1c3ba088af52.png)
 
 <taxiassign>
+	
 ![mvn_taxiassign](https://user-images.githubusercontent.com/78134019/109744226-46dd5580-7c15-11eb-8b47-5100ed01e3ae.png)
 
 
