@@ -561,14 +561,7 @@ az acr build --registry [acr-registry-name] --image [acr-registry-name].azurecr.
 
 
 -deployment.yml을 사용하여 배포 
---> 도커 이미지 만들기 붙이기 
-- deployment.yml 편집
-```
-namespace, image 설정
-env 설정 (config Map) 
-readiness 설정 (무정지 배포)
-liveness 설정 (self-healing)
-resource 설정 (autoscaling)
+
 ```
 ![deployment_yml](https://user-images.githubusercontent.com/78134019/109652001-9171ba00-7ba2-11eb-8c29-7128ceb4ec97.jpg)
 
