@@ -701,6 +701,7 @@ kubectl get deploy taxicall -w -n team03
 
 - deployment.yml에 readiness 옵션을 추가 
 
+
 ![무정지 배포1](https://user-images.githubusercontent.com/78134019/109809110-45d71300-7c6b-11eb-955c-9b8a3b3db698.png)
 
 
@@ -711,6 +712,8 @@ siege -c100 -t120S -r10 -v --content-type "application/json" 'http://20.194.36.2
 
 
 - Availability: 100.00 % 확인
+
+
 ![무정지 배포2](https://user-images.githubusercontent.com/78134019/109810318-bd597200-7c6c-11eb-88e4-197386b1e338.png)
 
 
