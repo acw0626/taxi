@@ -205,14 +205,16 @@ pause ..
 
 ## 폴리글랏 퍼시스턴스
 
+```
+위치 : /taxiguider>taximanage>pom.xml
+```
+![폴리그랏DB_최종](https://user-images.githubusercontent.com/78134019/109745194-d800fc00-7c16-11eb-87bd-2f65884a5f71.jpg)
 
-
-![폴리그랏](https://user-images.githubusercontent.com/78134019/109483794-02da3b80-7ac3-11eb-8714-40f1f41164bb.jpg)
 
 
 ## 폴리글랏 프로그래밍 - 파이썬
+![폴리그랏프로그래밍](https://user-images.githubusercontent.com/78134019/109745241-ebac6280-7c16-11eb-8839-6c974340839b.jpg)
 
-![폴리그랏프로그래밍](https://user-images.githubusercontent.com/78134019/109489189-dbd33800-7ac9-11eb-86f5-bbdb072454ce.jpg)
 
 ## 마이크로 서비스 호출 흐름
 
