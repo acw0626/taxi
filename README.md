@@ -226,19 +226,19 @@ pause ..
 http localhost:8081/택시호출s 휴대폰번호="01012345678" 호출상태=호출 호출위치="마포" 예상요금=25000
 http localhost:8081/택시호출s 휴대폰번호="01056789012" 호출상태=호출 호출위치="서대문구" 예상요금=30000
 ```
+![taxicall1](https://user-images.githubusercontent.com/78134019/109771576-51611480-7c40-11eb-8754-94d35a5703ec.png)
 
-![image](screenshots/taxicall1.png "taxicall 서비스 호출")
+![taxicall2](https://user-images.githubusercontent.com/78134019/109771589-545c0500-7c40-11eb-997a-90249ea8f912.png)
 
-![image](screenshots/taxicall2.png "taxicall 서비스 호출")
 
 
 호출 결과는 모두 택시 할당(taxiassign)에서 택시기사의 할당으로 처리되어 호출 확정 상태가 되어 있음.
 
-![image](screenshots/taxicall_result1.png "taxicall 서비스 호출 결과")
+![3](https://user-images.githubusercontent.com/78134019/109771602-58882280-7c40-11eb-93c4-a3831156c151.png)
 
-![image](screenshots/taxicall_result2.png "taxicall 서비스 호출 결과")
+![4](https://user-images.githubusercontent.com/78134019/109771654-69d12f00-7c40-11eb-9d2c-4807f0c3d726.png)
 
-![image](screenshots/taximanage_result1.png "taxicall 서비스 호출 결과 - 택시관리")
+![5](https://user-images.githubusercontent.com/78134019/109771661-6c338900-7c40-11eb-8a4a-9a758a8d1613.png)
 
 
 
@@ -256,7 +256,8 @@ Date: Tue, 02 Mar 2021 16:59:12 GMT
 ```
 http localhost:8081/택시호출s/
 ```
-![image](screenshots/taxicancel_result.png "taxicall 서비스 호출취소 결과")
+
+![6](https://user-images.githubusercontent.com/78134019/109771698-7a81a500-7c40-11eb-964e-a07e989f997c.png)
 
 
 택시관리에서는 해당 호출에 대해서 호출취소로 상태가 변경 됨.
@@ -264,14 +265,15 @@ http localhost:8081/택시호출s/
 ```
 http localhost:8082/택시관리s/
 ```
-![image](screenshots/taximanage_result.png "taxicall 서비스 호출취소 결과")
 
-- 고객 메시지 서비스 처리
-고객(customer)는 호출 확정과 할당 확정에 대한 메시지를 다음과 같이 받을 수 있으며,
+![7](https://user-images.githubusercontent.com/78134019/109771726-83727680-7c40-11eb-88bd-169a8d6184fe.png)
+
+
+- 고객 메시지 서비스 처리 고객(customer)는 호출 확정과 할당 확정에 대한 메시지를 다음과 같이 받을 수 있으며,
 할당 된 택시기사의 정보를 또한 확인 할 수 있다.
 파이썬으로 구현 하였음.
 
-![image](screenshots/customer.png "호출 결과에 대한 고객 메시지")
+![8](https://user-images.githubusercontent.com/78134019/109771811-9ab16400-7c40-11eb-8a49-57156a4d0c8e.png)
 
 
 ## Gateway 적용
