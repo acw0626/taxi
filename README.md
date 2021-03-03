@@ -629,30 +629,31 @@ hystrix:
 ![hystrix](https://user-images.githubusercontent.com/78134019/109652345-0218d680-7ba3-11eb-847b-708ba071c119.jpg)
 
 
------------------------------------------
-* siege 툴 사용법:
-```
- siege가 생성되어 있지 않으면:
- kubectl run siege --image=apexacme/siege-nginx -n phone82
- siege 들어가기:
- kubectl exec -it pod/siege-5c7c46b788-4rn4r -c siege -n phone82 -- /bin/bash
- siege 종료:
- Ctrl + C -> exit
-```
-* 부하테스터 siege 툴을 통한 서킷 브레이커 동작 확인:
-- 동시사용자 100명
-- 60초 동안 실시
+부하테스트
 
-```
-siege -c100 -t60S -r10 -v --content-type "application/json" 'http://app:8080/orders POST {"item": "abc123", "qty":3}'
-```
-- 부하 발생하여 CB가 발동하여 요청 실패처리하였고, 밀린 부하가 pay에서 처리되면서 다시 order를 받기 시작 
 
-![image](https://user-images.githubusercontent.com/73699193/98098702-07eefb80-1ed2-11eb-94bf-316df4bf682b.png)
+* Siege Run
+```
+kubectl run siege --image=apexacme/siege-nginx -n team03
+```
+* 실행
+```
+kubectl exec -it pod/siege-5459b87f86-hlfm9 -c siege -n team03 -- /bin/bash
+```
+*부하 실행
+```
+siege -c200 -t60S -r10 -v --content-type "application/json" 'http://20.194.36.201:8080/taxicalls POST {"tel": "0101231234"}'
+```
+
+- 부하 발생하여 CB가 발동하여 요청 실패처리하였고, 밀린 부하가 pay에서 처리되면서 다시 taxicall 받기 시작 
+
+![secs1](https://user-images.githubusercontent.com/78134019/109786899-01d71480-7c51-11eb-9e6c-0a819e85b020.png)
+
 
 - report
 
-![image](https://user-images.githubusercontent.com/73699193/98099047-6e741980-1ed2-11eb-9c55-6fe603e52f8b.png)
+![secs2](https://user-images.githubusercontent.com/78134019/109786922-07345f00-7c51-11eb-900a-315f7d0d6484.png)
+
 
 - CB 잘 적용됨을 확인
 
