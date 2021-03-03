@@ -228,13 +228,18 @@ http localhost:8081/택시호출s 휴대폰번호="01056789012" 호출상태=호
 ```
 
 ![image](screenshots/taxicall1.png "taxicall 서비스 호출")
+
 ![image](screenshots/taxicall2.png "taxicall 서비스 호출")
+
 
 호출 결과는 모두 택시 할당(taxiassign)에서 택시기사의 할당으로 처리되어 호출 확정 상태가 되어 있음.
 
 ![image](screenshots/taxicall_result1.png "taxicall 서비스 호출 결과")
+
 ![image](screenshots/taxicall_result2.png "taxicall 서비스 호출 결과")
+
 ![image](screenshots/taximanage_result1.png "taxicall 서비스 호출 결과 - 택시관리")
+
 
 
 - taxicall 서비스 호출 취소 처리
