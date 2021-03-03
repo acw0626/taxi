@@ -699,40 +699,22 @@ kubectl get deploy taxicall -w -n team03
 
 ## 무정지 재배포
 
-* 먼저 무정지 재배포가 100% 되는 것인지 확인하기 위해서 Autoscale 이나 CB 설정을 제거함
-
-
-- seige 로 배포작업 직전에 워크로드를 모니터링 함.
-```
-kubectl apply -f kubernetes/deployment_readiness.yml
-```
-- readiness 옵션이 없는 경우 배포 중 서비스 요청처리 실패
-
-![image](https://user-images.githubusercontent.com/73699193/98105334-2a394700-1edb-11eb-9633-f5c33c5dee9f.png)
-
-
 - deployment.yml에 readiness 옵션을 추가 
 
-![image](https://user-images.githubusercontent.com/73699193/98107176-75ecf000-1edd-11eb-88df-617c870b49fb.png)
+![무정지 배포1](https://user-images.githubusercontent.com/78134019/109809110-45d71300-7c6b-11eb-955c-9b8a3b3db698.png)
 
-- readiness적용된 deployment.yml 적용
 
+- seige 실행
 ```
-kubectl apply -f kubernetes/deployment.yml
+siege -c100 -t120S -r10 -v --content-type "application/json" 'http://20.194.36.201:8080/taxicalls POST {"tel": "0101231234"}'
 ```
-- 새로운 버전의 이미지로 교체
-```
-cd acr
-az acr build --registry admin02 --image admin02.azurecr.io/store:v4 .
-kubectl set image deploy store store=admin02.azurecr.io/store:v4 -n phone82
-```
-- 기존 버전과 새 버전의 store pod 공존 중
 
-![image](https://user-images.githubusercontent.com/73699193/98106161-65884580-1edc-11eb-9540-17a3c9bdebf3.png)
 
 - Availability: 100.00 % 확인
+![무정지 배포2](https://user-images.githubusercontent.com/78134019/109810318-bd597200-7c6c-11eb-88e4-197386b1e338.png)
 
-![image](https://user-images.githubusercontent.com/73699193/98106524-c152ce80-1edc-11eb-8e0f-3731ca2f709d.png)
+
+![무정지 배포3](https://user-images.githubusercontent.com/78134019/109810688-2fca5200-7c6d-11eb-9c67-d252d703064a.png)
 
 
 
