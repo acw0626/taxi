@@ -529,18 +529,23 @@ cd app
 kubectl apply -f kubernetes/deployment.yml
 ```
 <Deploy cutomer>
+	
 ![deploy_customer](https://user-images.githubusercontent.com/78134019/109744443-a471a200-7c15-11eb-94c9-a0c0a7999d04.png)
 
 <Deploy gateway>
+	
 ![deploy_gateway](https://user-images.githubusercontent.com/78134019/109744457-acc9dd00-7c15-11eb-8502-ff65e779e9d2.png)
 
 <Deploy taxiassign>
+	
 ![deploy_taxiassign](https://user-images.githubusercontent.com/78134019/109744471-b3585480-7c15-11eb-8d68-bba9c3d8ce01.png)
 
 <Deploy taxicall>
+	
 ![deploy_taxicall](https://user-images.githubusercontent.com/78134019/109744487-bb17f900-7c15-11eb-8bd0-ff0a9fc9b2e3.png)
 
 <Deploy_taximanage>
+
 ![deploy_taximanage](https://user-images.githubusercontent.com/78134019/109744591-e69ae380-7c15-11eb-834a-44befae55092.png)
 
 ## 동기식 호출 / 서킷 브레이킹 / 장애격리
