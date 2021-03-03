@@ -509,6 +509,55 @@ az aks update -n skccteam03-aks -g skccteam03-rsrcgrp --attach-acr skccteam03
 
 ![aks붙이기](https://user-images.githubusercontent.com/78134019/109653395-540e2c00-7ba4-11eb-97dd-2dcfdf5dc539.jpg)
 
+네임스페이스 만들기
+
+```
+kubectl create ns team03
+kubectl get ns
+```
+![image](https://user-images.githubusercontent.com/78134019/109776836-5cb73e80-7c46-11eb-9562-d462525d6dab.png)
+
+
+
+
+
+* 도커 이미지 만들어서 올리기
+```
+cd gateway
+az acr build --registry skccteam03 --image skccteam03.azurecr.io/gateway:v1 .
+az acr build --registry skccteam03 --image skccteam03.azurecr.io/gateway:v2 .
+cd ..
+cd taxicall
+az acr build --registry skccteam03 --image skccteam03.azurecr.io/taxicall:v1 .
+cd ..
+cd taximanage
+az acr build --registry skccteam03 --image skccteam03.azurecr.io/taximanage:v1 .
+cd ..
+cd taxiassign
+az acr build --registry skccteam03 --image skccteam03.azurecr.io/taxiassign:v1 .
+cd ..
+
+cd customer_py
+az acr build --registry skccteam03 --image skccteam03.azurecr.io/customer-policy-handler:v1 .
+
+az acr build --registry skccteam03 --image skccteam03.azurecr.io/customer-policy-handler:v2 .
+
+
+az acr build --registry [acr-registry-name] --image [acr-registry-name].azurecr.io/products:v1 .
+```
+
+![docker_gateway](https://user-images.githubusercontent.com/78134019/109777813-76a55100-7c47-11eb-8d8d-59eaabefab54.png)
+
+![docker_taxiassign](https://user-images.githubusercontent.com/78134019/109777820-77d67e00-7c47-11eb-9d77-85403dcf2da4.png)
+
+![docker_taxicall](https://user-images.githubusercontent.com/78134019/109777826-786f1480-7c47-11eb-9992-41f75907d16f.png)
+
+![docker_taximanage](https://user-images.githubusercontent.com/78134019/109777827-786f1480-7c47-11eb-9c9b-d3357eda0bd5.png)
+
+![docker_customer](https://user-images.githubusercontent.com/78134019/109777829-7907ab00-7c47-11eb-936f-723396cb272a.png)
+
+
+
 
 
 -deployment.yml을 사용하여 배포 
@@ -547,6 +596,16 @@ kubectl apply -f kubernetes/deployment.yml
 <Deploy_taximanage>
 
 ![deploy_taximanage](https://user-images.githubusercontent.com/78134019/109744591-e69ae380-7c15-11eb-834a-44befae55092.png)
+
+
+
+서비스확인
+```
+kubectl get all -n team03
+```
+![image](https://user-images.githubusercontent.com/78134019/109777026-9be58f80-7c46-11eb-9eac-a55ebcf91989.png)
+
+
 
 ## 동기식 호출 / 서킷 브레이킹 / 장애격리
 
