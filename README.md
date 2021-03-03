@@ -693,7 +693,8 @@ root@siege-5459b87f86-hlfm9:/# siege -c100 -t120S -r10 -v --content-type "applic
 ```
 kubectl get deploy taxicall -w -n team03
 ```
-![auto6](https://user-images.githubusercontent.com/78134019/109795092-e1f81e80-7c59-11eb-8019-4af5eb03f773.jpg)
+![auto_final](https://user-images.githubusercontent.com/78134019/109796515-98a8ce80-7c5b-11eb-9512-a0a927217a38.jpg)
+
 
 
 ## 무정지 재배포
