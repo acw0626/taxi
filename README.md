@@ -567,7 +567,6 @@ az acr build --registry [acr-registry-name] --image [acr-registry-name].azurecr.
 
 - deployment.yml로 서비스 배포
 ```
-cd app
 kubectl apply -f kubernetes/deployment.yml
 ```
 <Deploy cutomer>
@@ -750,7 +749,7 @@ http 20.194.36.201:8080/taxicalls tel="01012345678" status="call" location="mapo
 
 ![configmap5](https://user-images.githubusercontent.com/31096538/109798744-7c5a6100-7c5e-11eb-8aaa-03fa8277cee6.JPG)
 
-- configmap 삭제 후 app 서비스 재시작
+- configmap 삭제 후  재시작
 ```
 kubectl delete configmap apiurl -n team03
 kubectl get pod/taxicall-74f7dbc967-mtbmq -n team03 -o yaml | kubectl replace --force -f-
